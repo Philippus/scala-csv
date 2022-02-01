@@ -193,6 +193,14 @@ class CSVReaderSpec extends AnyFunSpec with Matchers with Using {
       }
     }
 
+    it("should throw an exception when there is leading whitespace") {
+      intercept[MalformedCSVException] {
+        using(CSVReader.open(new FileReader("src/test/resources/leading-whitespace.csv"))) { reader =>
+          reader.all()
+        }
+      }
+    }
+
     it("read CSV file including escaped fields") {
       var res: List[String] = Nil
       using(CSVReader.open(new FileReader("src/test/resources/escape.csv"))) { reader =>
